@@ -92,6 +92,17 @@
   }
   .hero-grid { display: grid; gap: 56px; align-items: center; position: relative; }
   @media (min-width: 1024px) { .hero-grid { grid-template-columns: 3fr 2fr; } }
+  .avatar {
+    width: 108px; height: 108px; border-radius: 50%;
+    padding: 3px; margin-bottom: 28px;
+    background: linear-gradient(135deg, #22C55E, #38BDF8);
+  }
+  .avatar img {
+    display: block; width: 100%; height: 100%;
+    border-radius: 50%; object-fit: cover;
+    border: 3px solid var(--background);
+    filter: contrast(1.06) saturate(1.08) brightness(1.02);
+  }
   .hero-kicker { color: var(--accent); font-weight: 500; letter-spacing: 0.04em; margin-bottom: 16px; }
   .hero h1 { font-size: clamp(40px, 7vw, 72px); font-weight: 700; line-height: 1.05; margin-bottom: 24px; }
   .hero-lede { color: var(--muted); font-size: clamp(17px, 2vw, 20px); max-width: 560px; margin-bottom: 40px; }
@@ -263,6 +274,9 @@
     <div class="container">
       <div class="hero-grid">
         <div>
+          <div class="avatar">
+            <img src="assets/edson.jpg" alt="Edson Zegarra" width="108" height="108" fetchpriority="high">
+          </div>
           <p class="hero-kicker">DevOps Engineer · Cloud Infrastructure &amp; SRE Support</p>
           <h1>Hi, I'm<br><span class="gradient-text">Edson Zegarra</span></h1>
           <p class="hero-lede">8+ years across technical support, cloud troubleshooting and infrastructure operations. Currently at <strong>LocalStack</strong>, debugging AWS emulation, Docker networking and Terraform for teams around the world — from Lima, Peru.</p>
@@ -375,7 +389,11 @@ devops     Running  0</pre>
         <div class="tl-item">
           <div class="tl-meta">
             <span class="tl-role">Technical Support Engineer</span>
-            <span class="tl-company"><span class="tl-mono">EX</span>Expeditech (MSP)</span>
+            <a class="tl-company" href="https://www.expeditech.net" rel="noopener">
+              <img class="tl-logo" src="https://www.google.com/s2/favicons?domain=expeditech.net&amp;sz=64" alt="" width="22" height="22" loading="lazy" onerror="this.remove()">
+              Expeditech (MSP)
+              <svg class="tl-ext" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
             <span class="tl-date">Oct 2023 — Oct 2024</span>
           </div>
           <p>Systems administration across 7+ multi-client environments: Active Directory, Intune endpoint security, VPN, migrations and patch management against SLA targets.</p>
@@ -384,7 +402,7 @@ devops     Running  0</pre>
           <div class="tl-meta">
             <span class="tl-role">Access Administrator</span>
             <a class="tl-company" href="https://www.viabcp.com" rel="noopener">
-              <img class="tl-logo" src="https://www.google.com/s2/favicons?domain=viabcp.com&amp;sz=64" alt="" width="22" height="22" loading="lazy" onerror="this.remove()">
+              <img class="tl-logo" src="assets/bcp.png" alt="" width="22" height="22" loading="lazy" onerror="this.remove()">
               Banco de Crédito BCP
               <svg class="tl-ext" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
             </a>
