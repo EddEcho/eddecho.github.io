@@ -78,6 +78,11 @@
 
   /* ── Hero ────────────────────────────────────── */
   .hero { min-height: 100svh; display: flex; align-items: center; padding: 140px 0 80px; position: relative; overflow: hidden; }
+  #net {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .hero .container { position: relative; z-index: 1; }
   .hero-orb {
     position: absolute; top: 10%; right: -10%;
     width: 480px; height: 480px; border-radius: 50%;
@@ -174,9 +179,27 @@
     width: 11px; height: 11px; border-radius: 50%;
     background: var(--background); border: 2px solid var(--accent);
   }
-  .tl-meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 16px; margin-bottom: 8px; }
+  .tl-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin-bottom: 8px; }
   .tl-role { font-family: var(--font-heading); font-size: 20px; font-weight: 600; }
-  .tl-company { color: var(--accent); font-weight: 500; }
+  .tl-company {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--accent); font-weight: 500;
+    padding: 4px 12px 4px 6px; border-radius: 999px;
+    background: var(--accent-dim); border: 1px solid transparent;
+    transition: border-color 200ms ease-out;
+  }
+  a.tl-company:hover { border-color: var(--accent-border); }
+  .tl-logo {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: #fff; object-fit: contain; padding: 2px;
+  }
+  .tl-mono {
+    width: 22px; height: 22px; border-radius: 6px;
+    background: var(--surface); color: var(--accent);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-heading); font-size: 11px; font-weight: 700;
+  }
+  .tl-ext { opacity: 0.6; }
   .tl-date { color: var(--muted); font-size: 14px; margin-left: auto; }
   .tl-item p { color: var(--muted); font-size: 15.5px; max-width: 640px; }
 
@@ -202,6 +225,12 @@
   .contact-box { text-align: center; max-width: 640px; margin: 0 auto; }
   .contact-box p { color: var(--muted); font-size: 18px; margin-bottom: 40px; }
   .contact-actions { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; }
+
+  /* ── Scroll reveal ───────────────────────────── */
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 500ms ease-out, transform 500ms ease-out; }
+    .reveal.in { opacity: 1; transform: none; }
+  }
 
   footer { border-top: 1px solid var(--line); padding: 36px 0; }
   .footer-inner {
@@ -229,6 +258,7 @@
 <main id="top">
 
   <section class="hero">
+    <canvas id="net" aria-hidden="true"></canvas>
     <div class="hero-orb" aria-hidden="true"></div>
     <div class="container">
       <div class="hero-grid">
@@ -321,7 +351,11 @@ devops     Running  0</pre>
         <div class="tl-item">
           <div class="tl-meta">
             <span class="tl-role">Technical Support Engineer (L2)</span>
-            <span class="tl-company">LocalStack</span>
+            <a class="tl-company" href="https://localstack.cloud" rel="noopener">
+              <img class="tl-logo" src="https://www.google.com/s2/favicons?domain=localstack.cloud&amp;sz=64" alt="" width="22" height="22" loading="lazy" onerror="this.remove()">
+              LocalStack
+              <svg class="tl-ext" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
             <span class="tl-date">Jan 2025 — Present</span>
           </div>
           <p>L2 support for teams building AWS applications locally across 100+ emulated services. I reproduce and resolve incidents involving service emulation, Docker networking, APIs and IaC, and prepare structured escalations for engineering.</p>
@@ -329,7 +363,11 @@ devops     Running  0</pre>
         <div class="tl-item">
           <div class="tl-meta">
             <span class="tl-role">Customer Support Engineer</span>
-            <span class="tl-company">Liferay</span>
+            <a class="tl-company" href="https://www.liferay.com" rel="noopener">
+              <img class="tl-logo" src="https://www.google.com/s2/favicons?domain=liferay.com&amp;sz=64" alt="" width="22" height="22" loading="lazy" onerror="this.remove()">
+              Liferay
+              <svg class="tl-ext" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
             <span class="tl-date">Nov 2022 — Jan 2025</span>
           </div>
           <p>Supported enterprise authentication (SAML, LDAP, Azure AD) for Fortune 500 clients. Daily Linux CLI work, root-cause analysis, and database troubleshooting across MySQL, Oracle and SQL Server.</p>
@@ -337,7 +375,7 @@ devops     Running  0</pre>
         <div class="tl-item">
           <div class="tl-meta">
             <span class="tl-role">Technical Support Engineer</span>
-            <span class="tl-company">Expeditech (MSP)</span>
+            <span class="tl-company"><span class="tl-mono">EX</span>Expeditech (MSP)</span>
             <span class="tl-date">Oct 2023 — Oct 2024</span>
           </div>
           <p>Systems administration across 7+ multi-client environments: Active Directory, Intune endpoint security, VPN, migrations and patch management against SLA targets.</p>
@@ -345,7 +383,11 @@ devops     Running  0</pre>
         <div class="tl-item">
           <div class="tl-meta">
             <span class="tl-role">Access Administrator</span>
-            <span class="tl-company">Banco de Crédito BCP</span>
+            <a class="tl-company" href="https://www.viabcp.com" rel="noopener">
+              <img class="tl-logo" src="https://www.google.com/s2/favicons?domain=viabcp.com&amp;sz=64" alt="" width="22" height="22" loading="lazy" onerror="this.remove()">
+              Banco de Crédito BCP
+              <svg class="tl-ext" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
             <span class="tl-date">Jun 2022 — Nov 2022</span>
           </div>
           <p>IAM operations for enterprise financial platforms — user lifecycles, permissions and least-privilege access controls under regulatory compliance.</p>
@@ -353,7 +395,11 @@ devops     Running  0</pre>
         <div class="tl-item">
           <div class="tl-meta">
             <span class="tl-role">NOC Engineer</span>
-            <span class="tl-company">Speedcast</span>
+            <a class="tl-company" href="https://www.speedcast.com" rel="noopener">
+              <img class="tl-logo" src="https://www.google.com/s2/favicons?domain=speedcast.com&amp;sz=64" alt="" width="22" height="22" loading="lazy" onerror="this.remove()">
+              Speedcast
+              <svg class="tl-ext" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
             <span class="tl-date">Oct 2019 — Jun 2022</span>
           </div>
           <p>24/7 monitoring of global network infrastructure. Diagnosed TCP/IP, DNS, routing and VPN incidents, coordinated Tier 3 escalations, and wrote the runbooks and post-mortems.</p>
@@ -361,7 +407,11 @@ devops     Running  0</pre>
         <div class="tl-item">
           <div class="tl-meta">
             <span class="tl-role">Service Desk Analyst</span>
-            <span class="tl-company">Aynitech</span>
+            <a class="tl-company" href="https://aynitech.com" rel="noopener">
+              <img class="tl-logo" src="https://www.google.com/s2/favicons?domain=aynitech.com&amp;sz=64" alt="" width="22" height="22" loading="lazy" onerror="this.remove()">
+              Aynitech
+              <svg class="tl-ext" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
             <span class="tl-date">2017 — 2019</span>
           </div>
           <p>Bilingual L1/L2 support for global users — where the whole thing started.</p>
@@ -439,6 +489,11 @@ devops     Running  0</pre>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
             LinkedIn
           </a>
+          <!-- Swap href for Calendly link when ready, e.g. https://calendly.com/your-user/30min -->
+          <a href="mailto:ezegarra1511@gmail.com?subject=Let%27s%20schedule%20a%20call" class="btn btn-ghost">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Schedule a call
+          </a>
         </div>
       </div>
     </div>
@@ -460,6 +515,102 @@ devops     Running  0</pre>
     </div>
   </div>
 </footer>
+
+<script>
+(function () {
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // Neural network background in the hero
+  var canvas = document.getElementById("net");
+  var hero = canvas.parentElement;
+  var ctx = canvas.getContext("2d");
+  var nodes = [];
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var LINK_DIST = 140;
+
+  function resize() {
+    var w = hero.clientWidth, h = hero.clientHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var count = Math.min(90, Math.floor(w * h / 16000));
+    nodes = [];
+    for (var i = 0; i < count; i++) {
+      nodes.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: (Math.random() - 0.5) * 0.35,
+        r: 1 + Math.random() * 1.6
+      });
+    }
+  }
+
+  function draw(step) {
+    var w = hero.clientWidth, h = hero.clientHeight;
+    ctx.clearRect(0, 0, w, h);
+    for (var i = 0; i < nodes.length; i++) {
+      var n = nodes[i];
+      if (step) {
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > w) n.vx *= -1;
+        if (n.y < 0 || n.y > h) n.vy *= -1;
+      }
+      for (var j = i + 1; j < nodes.length; j++) {
+        var m = nodes[j];
+        var dx = n.x - m.x, dy = n.y - m.y;
+        var d = Math.sqrt(dx * dx + dy * dy);
+        if (d < LINK_DIST) {
+          ctx.strokeStyle = "rgba(34, 197, 94, " + (0.14 * (1 - d / LINK_DIST)) + ")";
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(n.x, n.y);
+          ctx.lineTo(m.x, m.y);
+          ctx.stroke();
+        }
+      }
+      ctx.fillStyle = "rgba(56, 189, 248, 0.5)";
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  var running = false;
+  function loop() {
+    if (!running) return;
+    draw(true);
+    requestAnimationFrame(loop);
+  }
+
+  resize();
+  if (reduced) {
+    draw(false); // static constellation, no motion
+  } else {
+    // only animate while the hero is on screen
+    new IntersectionObserver(function (entries) {
+      var visible = entries[0].isIntersecting;
+      if (visible && !running) { running = true; loop(); }
+      if (!visible) running = false;
+    }).observe(hero);
+  }
+  window.addEventListener("resize", function () { resize(); if (reduced) draw(false); });
+
+  // Scroll-reveal for cards, timeline and section headers
+  var targets = document.querySelectorAll(".section-head, .card, .tl-item, .skill-group, .cred, .contact-box");
+  targets.forEach(function (el) { el.classList.add("reveal"); });
+  if (!reduced && "IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.15 });
+    targets.forEach(function (el) { io.observe(el); });
+  } else {
+    targets.forEach(function (el) { el.classList.add("in"); });
+  }
+})();
+</script>
 
 </body>
 </html>
