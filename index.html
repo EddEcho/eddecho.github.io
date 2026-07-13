@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Edson Zegarra — Cloud Support Engineer at LocalStack. AWS, infrastructure as code, and cloud emulation. Based in Lima, Peru.">
+<title>Edson Zegarra — Cloud Support Engineer</title>
+<style>
+  :root {
+    --bg: #0b0f14;
+    --surface: #121820;
+    --surface-2: #1a222c;
+    --border: #243040;
+    --text: #e6ebf1;
+    --text-muted: #9aa7b4;
+    --accent: #4fd1c5;
+    --accent-strong: #38b2a5;
+    --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { color: var(--accent-strong); text-decoration: underline; }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Header */
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(11, 15, 20, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    min-height: 64px;
+  }
+  .logo { font-weight: 700; font-size: 18px; color: var(--text); letter-spacing: -0.02em; }
+  .logo:hover { text-decoration: none; color: var(--accent); }
+  .nav-links { display: flex; gap: 8px; list-style: none; }
+  .nav-links a {
+    display: inline-flex; align-items: center;
+    min-height: 44px; padding: 0 14px;
+    color: var(--text-muted); font-size: 15px; border-radius: 8px;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--surface-2); text-decoration: none; }
+
+  /* Hero */
+  .hero { padding: 96px 0 80px; }
+  .hero .kicker {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 14px; color: var(--accent);
+    border: 1px solid var(--border); border-radius: 999px;
+    padding: 6px 14px; margin-bottom: 24px;
+    background: var(--surface);
+  }
+  .hero .kicker svg { flex-shrink: 0; }
+  .hero h1 {
+    font-size: clamp(32px, 6vw, 56px);
+    line-height: 1.1; letter-spacing: -0.03em;
+    margin-bottom: 16px;
+  }
+  .hero h1 .accent { color: var(--accent); }
+  .hero p.lede {
+    font-size: clamp(17px, 2.2vw, 20px);
+    color: var(--text-muted);
+    max-width: 620px; margin-bottom: 32px;
+  }
+  .cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    min-height: 48px; padding: 0 22px;
+    border-radius: var(--radius); font-size: 16px; font-weight: 600;
+    transition: background 200ms ease-out, border-color 200ms ease-out;
+  }
+  .btn:hover { text-decoration: none; }
+  .btn-primary { background: var(--accent); color: #06281f; }
+  .btn-primary:hover { background: var(--accent-strong); color: #06281f; }
+  .btn-secondary { border: 1px solid var(--border); color: var(--text); background: var(--surface); }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--text); }
+
+  /* Sections */
+  section { padding: 72px 0; border-top: 1px solid var(--border); }
+  .section-title { font-size: 14px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .section-heading { font-size: clamp(24px, 3.5vw, 32px); letter-spacing: -0.02em; margin-bottom: 20px; }
+  .prose { color: var(--text-muted); max-width: 680px; }
+  .prose p + p { margin-top: 16px; }
+  .prose strong { color: var(--text); }
+
+  /* Cards */
+  .grid { display: grid; gap: 20px; margin-top: 40px; grid-template-columns: 1fr; }
+  @media (min-width: 700px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px 24px;
+    transition: border-color 200ms ease-out;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card .icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--surface-2); color: var(--accent); margin-bottom: 18px;
+  }
+  .card h3 { font-size: 18px; margin-bottom: 8px; letter-spacing: -0.01em; }
+  .card p { font-size: 15px; color: var(--text-muted); }
+  .card .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .tag {
+    font-size: 13px; color: var(--text-muted);
+    border: 1px solid var(--border); border-radius: 999px;
+    padding: 3px 10px; background: var(--bg);
+  }
+
+  /* Project links */
+  .card a.project-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    min-height: 44px; font-size: 15px; font-weight: 600; margin-top: 8px;
+  }
+
+  /* Contact */
+  .contact-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 0; font-size: 14px; color: var(--text-muted);
+  }
+  .footer-inner { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <nav aria-label="Main navigation">
+      <a class="logo" href="#top">justedd<span style="color: var(--accent)">.com</span></a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="container">
+
+    <section class="hero" style="border-top: none;">
+      <span class="kicker">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Lima, Peru · UTC−5
+      </span>
+      <h1>Edson Zegarra<br><span class="accent">Cloud Support Engineer</span></h1>
+      <p class="lede">I help engineering teams debug, reproduce, and resolve cloud infrastructure issues. Currently at <a href="https://localstack.cloud" rel="noopener">LocalStack</a>, working with AWS emulation, Terraform, and everything in between.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#contact">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Get in touch
+        </a>
+        <a class="btn btn-secondary" href="https://github.com/EddEcho" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.49 0-.24-.01-.89-.01-1.74-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.36 9.36 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.59.69.49A10.05 10.05 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+          GitHub
+        </a>
+      </div>
+    </section>
+
+    <section id="about">
+      <p class="section-title">About</p>
+      <h2 class="section-heading">Making cloud problems reproducible</h2>
+      <div class="prose">
+        <p>I'm a support engineer who thinks like a developer. My day-to-day is taking a vague bug report — "Terraform fails against LocalStack" — and turning it into a minimal, pinned, reproducible test case that engineering can fix in one pass.</p>
+        <p>Before LocalStack I worked across <strong>Liferay</strong>, <strong>Jenkins</strong>, and enterprise Java environments, which taught me how real production systems break: slowly, and in the configuration layer.</p>
+      </div>
+    </section>
+
+    <section id="work">
+      <p class="section-title">What I do</p>
+      <h2 class="section-heading">Areas of focus</h2>
+      <div class="grid">
+        <article class="card">
+          <span class="icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+          </span>
+          <h3>AWS &amp; cloud emulation</h3>
+          <p>Deep hands-on experience with core AWS services and how they behave when emulated locally — parity gaps, IAM enforcement, service integrations.</p>
+          <div class="tags"><span class="tag">AWS</span><span class="tag">LocalStack</span><span class="tag">boto3</span></div>
+        </article>
+        <article class="card">
+          <span class="icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </span>
+          <h3>Infrastructure as code</h3>
+          <p>Terraform and CloudFormation reproductions, CDK deployments, and Docker Compose environments pinned to exact versions for reliable debugging.</p>
+          <div class="tags"><span class="tag">Terraform</span><span class="tag">CloudFormation</span><span class="tag">Docker</span></div>
+        </article>
+        <article class="card">
+          <span class="icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </span>
+          <h3>Debugging &amp; reproduction</h3>
+          <p>Log analysis, version bisection, and building minimal test cases that separate product defects from misconfiguration — with evidence, not guesses.</p>
+          <div class="tags"><span class="tag">Log analysis</span><span class="tag">Root cause</span><span class="tag">Support</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="projects">
+      <p class="section-title">Projects</p>
+      <h2 class="section-heading">Selected work on GitHub</h2>
+      <div class="grid">
+        <article class="card">
+          <h3>AWS Examples</h3>
+          <p>A codebase of AWS service examples built while preparing for AWS certification — practical, runnable snippets across core services.</p>
+          <a class="project-link" href="https://github.com/EddEcho/AWS-examples" rel="noopener">View repository
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </article>
+        <article class="card">
+          <h3>LocalStack Terraform Project</h3>
+          <p>Terraform configurations targeting LocalStack — infrastructure as code developed and tested entirely against local AWS emulation.</p>
+          <a class="project-link" href="https://github.com/EddEcho/localstack_project" rel="noopener">View repository
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </article>
+        <article class="card">
+          <h3>Learn to Cloud</h3>
+          <p>Working through cloud computing fundamentals hands-on — networking, Linux, IaC, and cloud platform basics.</p>
+          <a class="project-link" href="https://github.com/EddEcho/learn-to-cloud" rel="noopener">View repository
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact">
+      <p class="section-title">Contact</p>
+      <h2 class="section-heading">Let's talk</h2>
+      <div class="prose">
+        <p>Open to conversations about cloud tooling, developer experience, and support engineering. The fastest way to reach me:</p>
+      </div>
+      <div class="contact-row">
+        <a class="btn btn-primary" href="mailto:hello@justedd.com">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          hello@justedd.com
+        </a>
+        <a class="btn btn-secondary" href="https://github.com/EddEcho" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.09.68-.22.68-.49 0-.24-.01-.89-.01-1.74-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.5-1.11-1.5-.91-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05a9.36 9.36 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.63 1.03 2.75 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.59.69.49A10.05 10.05 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+          github.com/EddEcho
+        </a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <span>© 2026 Edson Zegarra · justedd.com</span>
+    <span>Built with plain HTML &amp; CSS · Hosted on GitHub Pages</span>
+  </div>
+</footer>
+
+</body>
+</html>
