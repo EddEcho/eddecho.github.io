@@ -83,45 +83,57 @@
     pointer-events: none;
   }
   .hero .container { position: relative; z-index: 1; }
-  /* Liferay-style glossy planet — crisp sphere with a slow moving sheen */
-  .hero-orb {
-    position: absolute; top: -30%; right: -12%;
-    width: min(940px, 108vw); height: min(940px, 108vw);
-    border-radius: 50%; overflow: hidden;
-    background: radial-gradient(circle at 32% 78%,
-      #60A5FA 0%, #3B82F6 13%, #4F46E5 33%,
-      #6D28D9 52%, #4C1D95 71%, #1E1B4B 100%);
-    box-shadow: 0 0 140px 24px rgba(79, 70, 229, 0.35);
-    animation: orbBreathe 11s ease-in-out infinite;
+  /* Liferay-style composition: a glossy sphere + overlapping arc rings, in our green/cyan palette */
+  .orbwrap {
+    position: absolute; top: -16%; right: -8%;
+    width: min(780px, 92vw); height: min(780px, 92vw);
     pointer-events: none;
   }
-  /* off-center highlight that orbits → liquid sheen sweeping the surface */
-  .hero-orb::before {
-    content: ""; position: absolute; inset: -12%;
-    background: radial-gradient(circle at 35% 68%,
-      rgba(147, 197, 253, 0.65), rgba(139, 92, 246, 0.28) 38%, transparent 66%);
-    filter: blur(26px);
+  .orb-sphere, .orb-ring, .orb-crescent { position: absolute; border-radius: 50%; }
+  .orb-sphere {
+    inset: 10%; overflow: hidden;
+    background: radial-gradient(circle at 34% 76%,
+      #34D399 0%, #22C55E 13%, #10B981 27%, #0EA5E9 45%, #0E7490 65%, #083344 100%);
+    box-shadow: 0 0 120px 12px rgba(16, 185, 129, 0.28);
+    animation: orbBreathe 12s ease-in-out infinite;
+  }
+  /* moving inner sheen (liquid light sweeping the surface) */
+  .orb-sphere::before {
+    content: ""; position: absolute; inset: -16%;
+    background: radial-gradient(circle at 38% 66%,
+      rgba(190, 242, 255, 0.55), rgba(34, 197, 94, 0.22) 40%, transparent 68%);
+    filter: blur(24px);
     will-change: transform;
-    animation: orbSpin 26s linear infinite;
+    animation: orbSpin 24s linear infinite;
   }
   /* specular glossy highlight, top-left */
-  .hero-orb::after {
+  .orb-sphere::after {
     content: ""; position: absolute; inset: 0;
-    background: radial-gradient(circle at 30% 22%, rgba(255,255,255,0.42), transparent 32%);
+    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.40), transparent 34%);
   }
-  /* second, smaller crescent sphere for depth (bottom-right) */
-  .hero-orb2 {
-    position: absolute; bottom: -34%; right: -4%;
-    width: min(560px, 66vw); height: min(560px, 66vw);
-    border-radius: 50%;
-    background: radial-gradient(circle at 42% 30%, #2563EB 0%, #1E3A8A 42%, transparent 63%);
-    filter: blur(8px); opacity: 0.75;
-    pointer-events: none;
+  /* thin glowing outlines — overlap the sphere and each other to make the crossing arc lines */
+  .orb-ring-1 {
+    inset: -6%;
+    background: radial-gradient(circle, transparent 60%, rgba(56,189,248,0.55) 61.5%, rgba(56,189,248,0.06) 64%, transparent 66%);
+    animation: ringDrift1 26s ease-in-out infinite;
+  }
+  .orb-ring-2 {
+    inset: 16%;
+    background: radial-gradient(circle, transparent 58%, rgba(52,211,153,0.55) 60%, rgba(52,211,153,0.06) 63%, transparent 66%);
+    animation: ringDrift2 30s ease-in-out infinite;
+  }
+  /* second sphere edge peeking in from bottom-right for depth */
+  .orb-crescent {
+    inset: 34% -16% -16% 34%;
+    background: radial-gradient(circle at 40% 32%, #0EA5E9 0%, #0C4A6E 42%, transparent 62%);
+    filter: blur(6px); opacity: 0.7;
   }
   @keyframes orbBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.035); } }
   @keyframes orbSpin { to { transform: rotate(360deg); } }
+  @keyframes ringDrift1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-4%, 5%); } }
+  @keyframes ringDrift2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(5%, -4%); } }
   @media (prefers-reduced-motion: reduce) {
-    .hero-orb, .hero-orb::before { animation: none; }
+    .orb-sphere, .orb-sphere::before, .orb-ring-1, .orb-ring-2 { animation: none; }
   }
   .hero-grid { display: grid; gap: 56px; align-items: center; position: relative; }
   @media (min-width: 1024px) { .hero-grid { grid-template-columns: 3fr 2fr; } }
@@ -303,8 +315,12 @@
 
   <section class="hero">
     <canvas id="net" aria-hidden="true"></canvas>
-    <div class="hero-orb2" aria-hidden="true"></div>
-    <div class="hero-orb" aria-hidden="true"></div>
+    <div class="orbwrap" aria-hidden="true">
+      <div class="orb-sphere"></div>
+      <div class="orb-crescent"></div>
+      <div class="orb-ring-1 orb-ring"></div>
+      <div class="orb-ring-2 orb-ring"></div>
+    </div>
     <div class="container">
       <div class="hero-grid">
         <div>
@@ -612,7 +628,7 @@ devops     Running  0</pre>
         var dx = n.x - m.x, dy = n.y - m.y;
         var d = Math.sqrt(dx * dx + dy * dy);
         if (d < LINK_DIST) {
-          ctx.strokeStyle = "rgba(99, 102, 241, " + (0.16 * (1 - d / LINK_DIST)) + ")";
+          ctx.strokeStyle = "rgba(34, 197, 94, " + (0.14 * (1 - d / LINK_DIST)) + ")";
           ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.moveTo(n.x, n.y);
@@ -620,7 +636,7 @@ devops     Running  0</pre>
           ctx.stroke();
         }
       }
-      ctx.fillStyle = "rgba(147, 197, 253, 0.5)";
+      ctx.fillStyle = "rgba(56, 189, 248, 0.5)";
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
       ctx.fill();
