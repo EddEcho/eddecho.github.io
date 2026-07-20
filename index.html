@@ -91,21 +91,23 @@
     animation: hueShift 16s ease-in-out infinite;
   }
   .orb { position: absolute; border-radius: 50%; }
-  /* back orb — largest, right side */
+  /* back orb — larger, up in the corner; smooth body + a defined bright rim, then soft fade */
   .orb-b {
-    width: min(820px, 82vw); aspect-ratio: 1; top: 6%; right: -6%;
-    background: radial-gradient(circle at 46% 46%,
-      #22C55E 0%, #0EA5E9 28%, #0C4A6E 50%, #082530 70%, transparent 78%);
-    filter: blur(30px); opacity: 0.95;
+    width: min(880px, 86vw); aspect-ratio: 1; top: -18%; right: -10%;
+    background: radial-gradient(circle at 48% 52%,
+      #22C55E 0%, #0EA5E9 26%, #0C4A6E 46%, #082f3d 60%,
+      rgba(56, 189, 248, 0.85) 70%, rgba(56, 189, 248, 0.18) 73.5%, transparent 78%);
+    filter: blur(7px); opacity: 0.95;
     will-change: transform;
     animation: orbDrift 20s ease-in-out infinite;
   }
-  /* front orb — a bit smaller, sits left of the back one, closer to the text */
+  /* front orb — upper, brighter, closer to the text; same bright-rim treatment */
   .orb-a {
-    width: min(620px, 64vw); aspect-ratio: 1; top: 22%; right: 22%;
-    background: radial-gradient(circle at 58% 56%,
-      #5EEAD4 0%, #22C55E 20%, #0EA5E9 42%, #0E7490 60%, transparent 74%);
-    filter: blur(26px);
+    width: min(640px, 66vw); aspect-ratio: 1; top: 0%; right: 14%;
+    background: radial-gradient(circle at 60% 62%,
+      #5EEAD4 0%, #2DD4BF 16%, #22C55E 30%, #0EA5E9 46%, #0E7490 58%,
+      #0A2e3c 66%, rgba(125, 240, 220, 0.95) 71%, rgba(125, 240, 220, 0.2) 74.5%, transparent 79%);
+    filter: blur(6px);
     will-change: transform;
     animation: orbBreathe 13s ease-in-out infinite;
   }
