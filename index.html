@@ -83,57 +83,46 @@
     pointer-events: none;
   }
   .hero .container { position: relative; z-index: 1; }
-  /* Liferay-style composition: a glossy sphere + overlapping arc rings, in our green/cyan palette */
+  /* Liferay-style corner: two large smooth spheres tucked in the corner, glowing rims overlapping into a flowing arc */
   .orbwrap {
-    position: absolute; top: -16%; right: -8%;
-    width: min(780px, 92vw); height: min(780px, 92vw);
+    position: absolute; top: -26%; right: -18%;
+    width: min(1000px, 104vw); height: min(1000px, 104vw);
     pointer-events: none;
   }
-  .orb-sphere, .orb-ring, .orb-crescent { position: absolute; border-radius: 50%; }
-  .orb-sphere {
-    inset: 10%; overflow: hidden;
-    background: radial-gradient(circle at 34% 76%,
-      #34D399 0%, #22C55E 13%, #10B981 27%, #0EA5E9 45%, #0E7490 65%, #083344 100%);
-    box-shadow: 0 0 120px 12px rgba(16, 185, 129, 0.28);
-    animation: orbBreathe 12s ease-in-out infinite;
+  .orb { position: absolute; border-radius: 50%; overflow: hidden; }
+  /* back sphere — bigger, deeper in the corner; its rim forms the lower flowing arc */
+  .orb-b {
+    width: 94%; height: 94%; bottom: -16%; right: -18%;
+    background: radial-gradient(circle at 44% 42%,
+      #22C55E 0%, #0EA5E9 26%, #0C4A6E 52%, #082530 76%, #05161d 100%);
+    opacity: 0.95;
   }
-  /* moving inner sheen (liquid light sweeping the surface) */
-  .orb-sphere::before {
-    content: ""; position: absolute; inset: -16%;
-    background: radial-gradient(circle at 38% 66%,
-      rgba(190, 242, 255, 0.55), rgba(34, 197, 94, 0.22) 40%, transparent 68%);
-    filter: blur(24px);
+  /* front sphere — upper, brighter */
+  .orb-a {
+    width: 68%; height: 68%; top: 3%; right: 7%;
+    background: radial-gradient(circle at 70% 74%,
+      #5EEAD4 0%, #22C55E 15%, #0EA5E9 35%, #0E7490 55%, #0A3444 76%, #061c26 100%);
+    animation: orbBreathe 13s ease-in-out infinite;
+  }
+  /* thin bright glowing rim on each sphere's edge (the crisp curved line) */
+  .orb-a::after, .orb-b::after {
+    content: ""; position: absolute; inset: 0; border-radius: 50%;
+    background: radial-gradient(circle, transparent 77%,
+      rgba(94, 234, 212, 0.75) 79.5%, rgba(94, 234, 212, 0.12) 82%, transparent 84%);
+  }
+  /* moving liquid sheen inside the front sphere */
+  .orb-a::before {
+    content: ""; position: absolute; inset: -18%;
+    background: radial-gradient(circle at 38% 64%,
+      rgba(190, 242, 255, 0.5), rgba(34, 197, 94, 0.2) 40%, transparent 68%);
+    filter: blur(26px);
     will-change: transform;
-    animation: orbSpin 24s linear infinite;
+    animation: orbSpin 26s linear infinite;
   }
-  /* specular glossy highlight, top-left */
-  .orb-sphere::after {
-    content: ""; position: absolute; inset: 0;
-    background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.40), transparent 34%);
-  }
-  /* thin glowing outlines — overlap the sphere and each other to make the crossing arc lines */
-  .orb-ring-1 {
-    inset: -6%;
-    background: radial-gradient(circle, transparent 60%, rgba(56,189,248,0.55) 61.5%, rgba(56,189,248,0.06) 64%, transparent 66%);
-    animation: ringDrift1 26s ease-in-out infinite;
-  }
-  .orb-ring-2 {
-    inset: 16%;
-    background: radial-gradient(circle, transparent 58%, rgba(52,211,153,0.55) 60%, rgba(52,211,153,0.06) 63%, transparent 66%);
-    animation: ringDrift2 30s ease-in-out infinite;
-  }
-  /* second sphere edge peeking in from bottom-right for depth */
-  .orb-crescent {
-    inset: 34% -16% -16% 34%;
-    background: radial-gradient(circle at 40% 32%, #0EA5E9 0%, #0C4A6E 42%, transparent 62%);
-    filter: blur(6px); opacity: 0.7;
-  }
-  @keyframes orbBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.035); } }
+  @keyframes orbBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
   @keyframes orbSpin { to { transform: rotate(360deg); } }
-  @keyframes ringDrift1 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-4%, 5%); } }
-  @keyframes ringDrift2 { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(5%, -4%); } }
   @media (prefers-reduced-motion: reduce) {
-    .orb-sphere, .orb-sphere::before, .orb-ring-1, .orb-ring-2 { animation: none; }
+    .orb-a, .orb-a::before { animation: none; }
   }
   .hero-grid { display: grid; gap: 56px; align-items: center; position: relative; }
   @media (min-width: 1024px) { .hero-grid { grid-template-columns: 3fr 2fr; } }
@@ -316,10 +305,8 @@
   <section class="hero">
     <canvas id="net" aria-hidden="true"></canvas>
     <div class="orbwrap" aria-hidden="true">
-      <div class="orb-sphere"></div>
-      <div class="orb-crescent"></div>
-      <div class="orb-ring-1 orb-ring"></div>
-      <div class="orb-ring-2 orb-ring"></div>
+      <div class="orb orb-b"></div>
+      <div class="orb orb-a"></div>
     </div>
     <div class="container">
       <div class="hero-grid">
