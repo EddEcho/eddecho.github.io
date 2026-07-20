@@ -83,46 +83,46 @@
     pointer-events: none;
   }
   .hero .container { position: relative; z-index: 1; }
-  /* Liferay-style corner: two large smooth spheres tucked in the corner, glowing rims overlapping into a flowing arc */
+  /* Big soft horizontal orbs with diffused edges; colors slowly shift like a looping video */
   .orbwrap {
-    position: absolute; top: -26%; right: -18%;
-    width: min(1000px, 104vw); height: min(1000px, 104vw);
+    position: absolute; top: -6%; right: -12%;
+    width: min(1200px, 118vw); height: min(820px, 92vh);
     pointer-events: none;
+    animation: hueShift 16s ease-in-out infinite;
   }
-  .orb { position: absolute; border-radius: 50%; overflow: hidden; }
-  /* back sphere — bigger, deeper in the corner; its rim forms the lower flowing arc */
+  .orb { position: absolute; border-radius: 50%; }
+  /* back orb — largest, right side */
   .orb-b {
-    width: 94%; height: 94%; bottom: -16%; right: -18%;
-    background: radial-gradient(circle at 44% 42%,
-      #22C55E 0%, #0EA5E9 26%, #0C4A6E 52%, #082530 76%, #05161d 100%);
-    opacity: 0.95;
+    width: min(820px, 82vw); aspect-ratio: 1; top: 6%; right: -6%;
+    background: radial-gradient(circle at 46% 46%,
+      #22C55E 0%, #0EA5E9 28%, #0C4A6E 50%, #082530 70%, transparent 78%);
+    filter: blur(30px); opacity: 0.95;
+    will-change: transform;
+    animation: orbDrift 20s ease-in-out infinite;
   }
-  /* front sphere — upper, brighter */
+  /* front orb — a bit smaller, sits left of the back one, closer to the text */
   .orb-a {
-    width: 68%; height: 68%; top: 3%; right: 7%;
-    background: radial-gradient(circle at 70% 74%,
-      #5EEAD4 0%, #22C55E 15%, #0EA5E9 35%, #0E7490 55%, #0A3444 76%, #061c26 100%);
-    animation: orbBreathe 13s ease-in-out infinite;
-  }
-  /* thin bright glowing rim on each sphere's edge (the crisp curved line) */
-  .orb-a::after, .orb-b::after {
-    content: ""; position: absolute; inset: 0; border-radius: 50%;
-    background: radial-gradient(circle, transparent 77%,
-      rgba(94, 234, 212, 0.75) 79.5%, rgba(94, 234, 212, 0.12) 82%, transparent 84%);
-  }
-  /* moving liquid sheen inside the front sphere */
-  .orb-a::before {
-    content: ""; position: absolute; inset: -18%;
-    background: radial-gradient(circle at 38% 64%,
-      rgba(190, 242, 255, 0.5), rgba(34, 197, 94, 0.2) 40%, transparent 68%);
+    width: min(620px, 64vw); aspect-ratio: 1; top: 22%; right: 22%;
+    background: radial-gradient(circle at 58% 56%,
+      #5EEAD4 0%, #22C55E 20%, #0EA5E9 42%, #0E7490 60%, transparent 74%);
     filter: blur(26px);
     will-change: transform;
-    animation: orbSpin 26s linear infinite;
+    animation: orbBreathe 13s ease-in-out infinite;
   }
-  @keyframes orbBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+  /* soft diffused inner glow that drifts, for a living/liquid feel */
+  .orb-a::before {
+    content: ""; position: absolute; inset: -12%; border-radius: 50%;
+    background: radial-gradient(circle at 40% 62%,
+      rgba(190, 242, 255, 0.45), rgba(34, 197, 94, 0.18) 42%, transparent 70%);
+    filter: blur(28px);
+    animation: orbSpin 28s linear infinite;
+  }
+  @keyframes orbBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+  @keyframes orbDrift { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-4%, 3%); } }
   @keyframes orbSpin { to { transform: rotate(360deg); } }
+  @keyframes hueShift { 0%, 100% { filter: hue-rotate(-12deg); } 50% { filter: hue-rotate(42deg); } }
   @media (prefers-reduced-motion: reduce) {
-    .orb-a, .orb-a::before { animation: none; }
+    .orbwrap, .orb-a, .orb-b, .orb-a::before { animation: none; }
   }
   .hero-grid { display: grid; gap: 56px; align-items: center; position: relative; }
   @media (min-width: 1024px) { .hero-grid { grid-template-columns: 3fr 2fr; } }
